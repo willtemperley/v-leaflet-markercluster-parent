@@ -1,4 +1,4 @@
-g-leaflet-markercluster
+Wrapper for Leaflet MarkerCluster extension
 =======================
 
-GWT wrapper for Leaflet MarkerCluster extension
+Depends on g-leaflet
