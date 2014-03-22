@@ -28,6 +28,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
+import org.vaadin.addon.leaflet.LOpenStreetMapLayer;
 
 // 
 public class BasicTest extends AbstractTest {
@@ -73,6 +74,10 @@ public class BasicTest extends AbstractTest {
 
 		leafletMap.setControls(new ArrayList<Control>(Arrays.asList(Control
 				.values())));
+                
+                // Marker cluster needs maxZoom defined, explicitly or via base layer
+                //leafletMap.addBaseLayer(new LOpenStreetMapLayer(), "OSM");
+                leafletMap.setMaxZoom(15);
 
 		LPolyline leafletPolyline = new LPolyline(new Point(60.45, 22.295),
 				new Point(60.4555, 22.301), new Point(60.45, 22.307));
