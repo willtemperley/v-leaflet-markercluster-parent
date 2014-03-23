@@ -28,6 +28,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.ClientConnector.ConnectorErrorEvent;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
+
 import org.jsoup.nodes.Element;
 
 public class TServer {
@@ -58,9 +59,14 @@ public class TServer {
 
         WebAppContext context = new WebAppContext();
         VaadinServlet vaadinServlet = new VaadinServlet() {
+			@Override
+			public void init(ServletConfig servletConfig)
+					throws ServletException {
+				super.init(servletConfig);
+        	
 
-            @Override
-            protected void servletInitialized() throws ServletException {
+            //@Override
+            //protected void servletInitialized() throws ServletException {
                 getService().addSessionInitListener(new SessionInitListener() {
                     @Override
                     public void sessionInit(SessionInitEvent event)
