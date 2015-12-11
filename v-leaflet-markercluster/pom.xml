@@ -3,13 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.vaadin.addons</groupId>
     <artifactId>v-leaflet-markercluster</artifactId>
-    <version>0.4.4-SNAPSHOT</version>
+    <version>1.0.0-b2</version>
     <name>V-Leaflet Markercluster extensions</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>7.2.6</vaadin.version>
-        <v-leaflet-version>0.5.7</v-leaflet-version>
+        <v-leaflet-version>1.0.0-SNAPSHOT</v-leaflet-version>
         <g-leaflet-markercluster-version>${project.version}</g-leaflet-markercluster-version>
     </properties>
 
