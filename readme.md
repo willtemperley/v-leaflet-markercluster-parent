@@ -12,4 +12,7 @@ During development you might need to have development version of v-leaflet, g-le
 
 ### The core slippy map library: [LeafletJS](http://leafletjs.com)
 
+Run this in the v-leaflet-markercluster module dir to get the test server going:
+
+`mvn -e exec:java -Dexec.mainClass="org.vaadin.addon.leaflet.demoandtestapp.util.TServer" -Dexec.classpathScope=test`
 
