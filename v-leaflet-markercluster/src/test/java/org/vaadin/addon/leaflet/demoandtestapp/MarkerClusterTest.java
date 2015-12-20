@@ -13,7 +13,7 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.shape.random.RandomPointsBuilder;
 
-public class MarkerClusterTest extends AbstractTest {
+public class MarkerClusterTest extends AbstractMarkerClusterTest {
 
 	@Override
 	public String getDescription() {
@@ -40,35 +40,10 @@ public class MarkerClusterTest extends AbstractTest {
 		}
 	}
 
-	private LMap leafletMap;
-
-	@Override
-	public Component getTestComponent() {
-
-		leafletMap = new LMap();
-
-		Point p = new GeometryFactory().createPoint(new Coordinate(8.622, 45.819));
-
-		leafletMap.setCenter(p);
-		leafletMap.setZoomLevel(11);
-		leafletMap.setMaxZoom(19);
-
-        LTileLayer bl = new LTileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png");
-        bl.setAttributionString("&copy; <a href='http://osm.org/copyright'>OpenStreetMap</a> contributors");
-
-		bl.setMaxZoom(18);
-		bl.setDetectRetina(true);
-		leafletMap.addBaseLayer(bl, "Ispra");
-
-
-		leafletMap.addComponent(getMarkerClusterGroup(p));
-
-		return leafletMap;
-
-	}
-
-	private LMarkerClusterGroup getMarkerClusterGroup(Point p) {
+	public LMarkerClusterGroup getMarkerClusterGroup(Point p) {
 		LMarkerClusterGroup mcg = new LMarkerClusterGroup();
+
+//        mcg.setIconCreateFunctionString("(function(cluster) {return L.divIcon({ html: '<b>n markers = ' + cluster.getChildCount() + '</b>' });})");
 
 		Envelope env = new Envelope();
 		env.expandToInclude(p.getCoordinate());

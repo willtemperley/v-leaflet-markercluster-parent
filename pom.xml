@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.vaadin.addons</groupId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0-b3</version>
     <packaging>pom</packaging>
 
     <name>Markercluster Leaflet plugin wrappers for Java (Vaadin) and GWT, parent POM for loosely coupled projects</name>

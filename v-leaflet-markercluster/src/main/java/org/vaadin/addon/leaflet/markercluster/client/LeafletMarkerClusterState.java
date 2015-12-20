@@ -1,5 +1,6 @@
 package org.vaadin.addon.leaflet.markercluster.client;
 
+import com.google.gwt.core.client.JavaScriptObject;
 import org.vaadin.addon.leaflet.shared.LeafletLayerGroupState;
 
 public class LeafletMarkerClusterState extends LeafletLayerGroupState {
@@ -13,6 +14,7 @@ public class LeafletMarkerClusterState extends LeafletLayerGroupState {
     public Integer maxClusterRadius;
     public Boolean singleMarkerMode;
     public Integer spiderfyDistanceMultiplier;
+    public String iconCreateFunctionString;
 
 
 }

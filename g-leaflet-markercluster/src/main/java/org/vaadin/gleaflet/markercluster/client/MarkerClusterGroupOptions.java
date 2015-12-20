@@ -56,4 +56,9 @@ public class MarkerClusterGroupOptions extends JavaScriptObject {
     /*-{
         this.spiderfyDistanceMultiplier = spiderfyDistanceMultiplier;
     }-*/;
+
+    public native final void setIconCreateFunction(String customizeFunctionString)
+    /*-{
+        this.iconCreateFunction = $wnd.eval(customizeFunctionString);
+    }-*/;
 }

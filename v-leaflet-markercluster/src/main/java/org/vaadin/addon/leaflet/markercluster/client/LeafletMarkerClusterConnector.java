@@ -52,6 +52,9 @@ public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector 
         if (s.spiderfyDistanceMultiplier != null) {
             o.setSpiderfyDistanceMultiplier(s.spiderfyDistanceMultiplier);
         }
+        if (s.iconCreateFunctionString != null) {
+            o.setIconCreateFunction(s.iconCreateFunctionString);
+        }
 
         return o;
     }

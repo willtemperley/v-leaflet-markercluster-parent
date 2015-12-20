@@ -48,5 +48,9 @@ public class LMarkerClusterGroup extends LFeatureGroup {
     public void setSpiderfyDistanceMultiplier(Integer spiderfyDistanceMultiplier) {
         getState().spiderfyDistanceMultiplier = spiderfyDistanceMultiplier;
     }
+
+    public void setIconCreateFunctionString(String iconCreateFunctionString) {
+        getState().iconCreateFunctionString = iconCreateFunctionString;
+    }
 	
 }
