@@ -2,11 +2,15 @@ package org.vaadin.addon.leaflet.demoandtestapp;
 
 import com.vaadin.ui.Component;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Envelope;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.shape.random.RandomPointsBuilder;
 import org.vaadin.addon.leaflet.LMap;
+import org.vaadin.addon.leaflet.LMarker;
 import org.vaadin.addon.leaflet.LTileLayer;
 import org.vaadin.addon.leaflet.demoandtestapp.util.AbstractTest;
+import org.vaadin.addon.leaflet.markercluster.LMarkerClusterGroup;
 
 /**
  * Provides a base map to play with
@@ -14,6 +18,27 @@ import org.vaadin.addon.leaflet.demoandtestapp.util.AbstractTest;
  * Created by will on 20/12/15.
  */
 public abstract class AbstractMarkerClusterTest extends AbstractTest {
+
+    private class RandomMarkerFactory extends RandomPointsBuilder {
+
+        private Envelope env;
+
+        public RandomMarkerFactory(Envelope env) {
+            this.env = env;
+        }
+
+
+        public LMarker getRandomMarker() {
+
+            Coordinate c = createRandomCoord(env);
+            GeometryFactory gf = new GeometryFactory();
+
+            Point p = gf.createPoint(c);
+
+            return new LMarker(p);
+        }
+    }
+
 	@Override
 	public Component getTestComponent() {
 
@@ -39,6 +64,21 @@ public abstract class AbstractMarkerClusterTest extends AbstractTest {
 
 	}
 
-	public abstract Component getMarkerClusterGroup(Point p);
+
+    public LMarkerClusterGroup getMarkerClusterGroup(Point p) {
+        LMarkerClusterGroup mcg = new LMarkerClusterGroup();
+
+
+        Envelope env = new Envelope();
+        env.expandToInclude(p.getCoordinate());
+        env.expandBy(0.5);
+
+        RandomMarkerFactory rmf = new RandomMarkerFactory(env);
+        for (int i = 0; i < 2000; i++) {
+            mcg.addComponent(rmf.getRandomMarker());
+        }
+        return mcg;
+
+    }
 
 }

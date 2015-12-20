@@ -39,35 +39,16 @@ public class MarkerClusterTestCustomIcon extends AbstractMarkerClusterTest {
 		}
 	}
 
-	private LMap leafletMap;
 
-	public LMarkerClusterGroup getMarkerClusterGroup(Point p) {
-		LMarkerClusterGroup mcg = new LMarkerClusterGroup();
-
+    @Override
+    public LMarkerClusterGroup getMarkerClusterGroup(Point p) {
 		/*
-		This is really horrible. The JS function is injected, using eval() in the GWT code
+		This is really horrible ... the function is injected, using eval()
         I can't see another way to do this.
-        There is no way to pass a java function to a Vaadin widget as initial state AFAIK
-        Using Vaadin RPC, even if possible, would generate loads of traffic, as the clusters are built client-side0
+        There is no way to pass a java function to a Vaadin widget.
 		 */
+        LMarkerClusterGroup mcg = super.getMarkerClusterGroup(p);
         mcg.setIconCreateFunctionString("(function(cluster) {return L.divIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });})");
-
-		Envelope env = new Envelope();
-		env.expandToInclude(p.getCoordinate());
-		env.expandBy(0.5);
-
-		RandomMarkerFactory rmf = new RandomMarkerFactory(env);
-		for (int i = 0; i < 2000; i++) {
-			mcg.addComponent(rmf.getRandomMarker());	
-		}
-		return mcg;
-
-	}
-
-	@Override
-	protected void setup() {
-		super.setup();
-
-
-	}
+        return mcg;
+    }
 }
