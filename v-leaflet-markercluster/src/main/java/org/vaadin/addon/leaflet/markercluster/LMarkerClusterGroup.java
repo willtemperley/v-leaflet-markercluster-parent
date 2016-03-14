@@ -1,13 +1,34 @@
 package org.vaadin.addon.leaflet.markercluster;
 
+import com.vaadin.shared.MouseEventDetails;
 import org.vaadin.addon.leaflet.LFeatureGroup;
 
+import org.vaadin.addon.leaflet.LeafletClickEvent;
+import org.vaadin.addon.leaflet.LeafletClickListener;
 import org.vaadin.addon.leaflet.markercluster.client.LeafletMarkerClusterState;
+import org.vaadin.addon.leaflet.markercluster.shared.AnimationEndServerRpc;
+import org.vaadin.addon.leaflet.shared.ClickServerRpc;
+import org.vaadin.addon.leaflet.shared.Point;
 
 /**
  * 
  */
 public class LMarkerClusterGroup extends LFeatureGroup {
+	
+	public LMarkerClusterGroup() {
+        registerRpc(new ClickServerRpc() {
+            @Override
+            public void onClick(Point p, MouseEventDetails d) {
+                fireEvent(new LeafletClickEvent(LMarkerClusterGroup.this, p, d));
+            }
+        });
+        registerRpc(new AnimationEndServerRpc() {
+            @Override
+            public void onAnimationEnd() {
+                fireEvent(new LeafletAnimationEndEvent(LMarkerClusterGroup.this));
+            }
+        });
+    }
 
     protected LeafletMarkerClusterState getState() {
         return (LeafletMarkerClusterState) super.getState();
@@ -51,6 +72,15 @@ public class LMarkerClusterGroup extends LFeatureGroup {
 
     public void setIconCreateFunctionString(String iconCreateFunctionString) {
         getState().iconCreateFunctionString = iconCreateFunctionString;
+    }
+    
+    public void addClickListener(LeafletClickListener listener) {
+        addListener(LeafletClickEvent.class, listener,
+                LeafletClickListener.METHOD);
+    }
+
+    public void addAnimationEndListener(LeafletAnimationEndListener listener) {
+        addListener("onAnimationEnd", LeafletAnimationEndEvent.class, listener, LeafletAnimationEndListener.METHOD);
     }
 	
 }
