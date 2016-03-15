@@ -19,7 +19,7 @@ import org.vaadin.gleaflet.markercluster.client.MarkerClusterGroupOptions;
 @Connect(LMarkerClusterGroup.class)
 public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector {
 	
-private MarkerClusterGroup markerClusterGroup;
+	protected MarkerClusterGroup markerClusterGroup;
 
     AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
     
