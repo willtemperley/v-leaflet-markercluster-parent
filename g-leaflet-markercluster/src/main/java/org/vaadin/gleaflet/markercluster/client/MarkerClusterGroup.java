@@ -29,7 +29,7 @@ public class MarkerClusterGroup extends LayerGroup {
 		this.addLayer(marker)
 	}-*/;
 
-	public native final JavaScriptObject addClickListener(ClickListener listener)
+	public native final JavaScriptObject addClusterClickListener(ClickListener listener)
 	/*-{
 		var fn = $entry(function(e) {
 				listener.@org.peimari.gleaflet.client.ClickListener::onClick(Lorg/peimari/gleaflet/client/MouseEvent;)(e);

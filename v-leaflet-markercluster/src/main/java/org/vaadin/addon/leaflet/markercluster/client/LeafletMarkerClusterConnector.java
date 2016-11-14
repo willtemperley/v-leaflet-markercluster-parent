@@ -81,7 +81,7 @@ public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector 
             markerClusterGroup.removeListener(clusterClickListener);
             clusterClickListener = null;
         }
-        clusterClickListener = markerClusterGroup.addClickListener(new ClickListener() {
+        clusterClickListener = markerClusterGroup.addClusterClickListener(new ClickListener() {
             @Override
             public void onClick(MouseEvent event) {
                 rpc.onClick(U.toPoint(event.getLatLng()),
