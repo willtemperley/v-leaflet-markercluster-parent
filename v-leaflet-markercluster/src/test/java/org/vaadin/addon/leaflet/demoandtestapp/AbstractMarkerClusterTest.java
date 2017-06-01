@@ -9,8 +9,8 @@ import com.vividsolutions.jts.shape.random.RandomPointsBuilder;
 import org.vaadin.addon.leaflet.LMap;
 import org.vaadin.addon.leaflet.LMarker;
 import org.vaadin.addon.leaflet.LTileLayer;
-import org.vaadin.addon.leaflet.demoandtestapp.util.AbstractTest;
 import org.vaadin.addon.leaflet.markercluster.LMarkerClusterGroup;
+import org.vaadin.addonhelpers.AbstractTest;
 
 /**
  * Provides a base map to play with
