@@ -5,7 +5,7 @@
 	<!-- POM file generated with GWT webAppCreator -->
 	<modelVersion>4.0.0</modelVersion>
 
-	<version>1.0.0-b3</version>
+	<version>1.0.0-v7</version>
 	<groupId>org.vaadin.addons</groupId>
 	<artifactId>g-leaflet-markercluster</artifactId>
 	<packaging>jar</packaging>
