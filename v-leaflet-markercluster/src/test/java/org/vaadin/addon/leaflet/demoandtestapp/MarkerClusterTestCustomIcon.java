@@ -15,33 +15,12 @@ public class MarkerClusterTestCustomIcon extends AbstractMarkerClusterTest {
 		return "MarkerCluster test case with custom icon";
 	}
 
-	private class RandomMarkerFactory extends RandomPointsBuilder {
-
-		private Envelope env;
-
-		public RandomMarkerFactory(Envelope env) {
-			this.env = env;
-		}
-
-
-		public LMarker getRandomMarker() {
-
-			Coordinate c = createRandomCoord(env);
-			GeometryFactory gf = new GeometryFactory();
-
-			Point p = gf.createPoint(c);
-
-			return new LMarker(p);
-		}
-	}
-
-
     @Override
     public LMarkerClusterGroup getMarkerClusterGroup(Point p) {
 		/*
-		This is really horrible ... the function is injected, using eval()
-        I can't see another way to do this.
-        There is no way to pass a java function to a Vaadin widget.
+		This is not a great way to do this ... the function is injected, using eval()
+
+		FIXME disallow this and allow a custom script to be evaluated.
 		 */
         LMarkerClusterGroup mcg = super.getMarkerClusterGroup(p);
         mcg.setIconCreateFunctionString("(function(cluster) {return L.divIcon({ html: '<b>' + cluster.getChildCount() + '</b>' });})");
