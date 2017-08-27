@@ -19,6 +19,8 @@ import org.vaadin.addon.leaflet.markercluster.LMarkerClusterGroup;
  */
 public abstract class AbstractMarkerClusterTest extends AbstractTest {
 
+    protected LMap leafletMap = new LMap();
+
     private class RandomMarkerFactory extends RandomPointsBuilder {
 
         private Envelope env;
@@ -42,7 +44,6 @@ public abstract class AbstractMarkerClusterTest extends AbstractTest {
 	@Override
 	public Component getTestComponent() {
 
-		LMap leafletMap = new LMap();
 
 		Point p = new GeometryFactory().createPoint(new Coordinate(8.622, 45.819));
 
