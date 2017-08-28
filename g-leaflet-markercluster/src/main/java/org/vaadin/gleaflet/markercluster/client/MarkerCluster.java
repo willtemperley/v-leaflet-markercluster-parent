@@ -5,7 +5,7 @@ import com.google.gwt.core.client.JsArray;
 import org.peimari.gleaflet.client.Marker;
 
 /**
- * These are created dynamically in JS therefore can't be constructed
+ * A marker cluster created dynamically in JS by the plugin
  */
 public class MarkerCluster extends JavaScriptObject {
 

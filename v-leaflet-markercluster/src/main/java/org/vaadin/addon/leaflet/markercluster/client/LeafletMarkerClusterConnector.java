@@ -15,11 +15,11 @@ import com.vaadin.shared.ui.Connect;
 @Connect(LMarkerClusterGroup.class)
 public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector {
 	
-	protected MarkerClusterGroup markerClusterGroup;
+	private MarkerClusterGroup markerClusterGroup;
 
-    AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
+    private AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
 
-    MarkerClusterClickRpc markerClusterClickRpc = RpcProxy.create(MarkerClusterClickRpc.class, this);
+    private MarkerClusterClickRpc markerClusterClickRpc = RpcProxy.create(MarkerClusterClickRpc.class, this);
 
     private JavaScriptObject clusterClickListener;
 
@@ -80,32 +80,30 @@ public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector 
             clusterClickListener = null;
         }
 
-        clusterClickListener = markerClusterGroup.addClusterClickListener(new ClusterClickListener() {
-            @Override
-            public void onClick(MouseEvent event, MarkerCluster cluster) {
-                StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.append("{\"type\":\"FeatureCollection\",\"features\":[");
-                JsArray<Marker> childMarkers = cluster.getAllChildMarkers();
-                for (int i = 0; i < childMarkers.length(); i++) {
-                    Marker marker = childMarkers.get(i);
-                    String s = marker.toGeoJSONString();
-                    stringBuilder.append(s);
-                    if (i < childMarkers.length() - 1) {
-                        stringBuilder.append(",");
-                    }
+        /*
+        Serialize MarkerCluster to GeoJSON
+         */
+        clusterClickListener = markerClusterGroup.addClusterClickListener((event, cluster) -> {
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("{\"type\":\"FeatureCollection\",\"features\":[");
+            JsArray<Marker> childMarkers = cluster.getAllChildMarkers();
+            for (int i = 0; i < childMarkers.length(); i++) {
+                Marker marker = childMarkers.get(i);
+                String s = marker.toGeoJSONString();
+                stringBuilder.append(s);
+                if (i < childMarkers.length() - 1) {
+                    stringBuilder.append(",");
                 }
-                stringBuilder.append("]}");
-                markerClusterClickRpc.onClusterClick(stringBuilder.toString());
             }
+            stringBuilder.append("]}");
+            markerClusterClickRpc.onClusterClick(stringBuilder.toString());
         });
 
         markerClusterGroup.removeAnimationEndListener();
-        markerClusterGroup.addAnimationEndListener(new AnimationEndListener() {
-            @Override
-            public void onAnimationEnd() {
-                animationEndServerRpc.onAnimationEnd();
-            }
-        });
+        markerClusterGroup.addAnimationEndListener(
+                () -> animationEndServerRpc.onAnimationEnd()
+        );
     }
 
 }

@@ -10,12 +10,11 @@ public class LMarkerClusterClickEvent extends ConnectorEvent {
      * Creates a new event fired by the given source.
      *
      * @param source the source connector
-     * @param json
+     * @param json the geoJson encoded cluster
      */
     public LMarkerClusterClickEvent(ClientConnector source, String json) {
         super(source);
         this.json = json;
-
     }
 
     public String getJson() {
