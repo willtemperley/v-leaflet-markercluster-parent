@@ -1,18 +1,14 @@
 package org.vaadin.addon.leaflet.demoandtestapp;
 
-import com.vaadin.ui.Notification;
-import com.vividsolutions.jts.geom.*;
-import com.vividsolutions.jts.io.WKTReader;
-import com.vividsolutions.jts.io.WKTWriter;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 import elemental.json.Json;
 import elemental.json.JsonArray;
 import elemental.json.JsonObject;
 import elemental.json.JsonValue;
-import org.peimari.gleaflet.client.GeoJSON;
-import org.vaadin.addon.leaflet.LMap;
 import org.vaadin.addon.leaflet.LPolygon;
-import org.vaadin.addon.leaflet.LPolyline;
-import org.vaadin.addon.leaflet.LeafletLayer;
 import org.vaadin.addon.leaflet.markercluster.LMarkerClusterClickEvent;
 import org.vaadin.addon.leaflet.markercluster.LMarkerClusterGroup;
 import org.vaadin.addon.leaflet.markercluster.MarkerClusterClickListener;
@@ -21,11 +17,12 @@ public class MarkerClusterTestClick extends AbstractMarkerClusterTest {
 
 	@Override
 	public String getDescription() {
-		return "MarkerCluster test case with custom icon";
+		return "MarkerCluster click sends serialized markers to server";
 	}
 
     @Override
     public LMarkerClusterGroup getMarkerClusterGroup(Point p) {
+
 
         LMarkerClusterGroup mcg = super.getMarkerClusterGroup(p);
         mcg.addMarkerClusterClickListener(new MarkerClusterClickListener() {
@@ -33,10 +30,8 @@ public class MarkerClusterTestClick extends AbstractMarkerClusterTest {
             @Override
             public void onClusterClick(LMarkerClusterClickEvent markerClusterClickEvent) {
 
-                System.out.println(markerClusterClickEvent.getJson());
 
                 JsonObject parse = Json.parse(markerClusterClickEvent.getJson());
-
 
                 JsonArray features = parse.getArray("features");
                 Coordinate[] coordinates = new Coordinate[features.length() + 1];

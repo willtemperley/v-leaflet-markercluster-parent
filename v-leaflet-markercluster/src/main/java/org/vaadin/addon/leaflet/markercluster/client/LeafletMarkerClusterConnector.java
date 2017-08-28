@@ -15,11 +15,11 @@ import com.vaadin.shared.ui.Connect;
 @Connect(LMarkerClusterGroup.class)
 public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector {
 	
-	protected MarkerClusterGroup markerClusterGroup;
+	private MarkerClusterGroup markerClusterGroup;
 
-    AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
+    private AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
 
-    MarkerClusterClickRpc markerClusterClickRpc = RpcProxy.create(MarkerClusterClickRpc.class, this);
+    private MarkerClusterClickRpc markerClusterClickRpc = RpcProxy.create(MarkerClusterClickRpc.class, this);
 
     private JavaScriptObject clusterClickListener;
 
@@ -80,6 +80,9 @@ public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector 
             clusterClickListener = null;
         }
 
+        /*
+        Serialize MarkerCluster to GeoJSON
+         */
         clusterClickListener = markerClusterGroup.addClusterClickListener(new ClusterClickListener() {
             @Override
             public void onClick(MouseEvent event, MarkerCluster cluster) {
