@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.vaadin.addons</groupId>
     <artifactId>v-leaflet-markercluster</artifactId>
-    <version>1.0.0-v7</version>
+    <version>1.0.5-v7</version>
     <name>V-Leaflet Markercluster extensions</name>
 
     <properties>
@@ -11,6 +11,7 @@
         <vaadin.version>7.2.6</vaadin.version>
         <g-leaflet-markercluster-version>${project.version}</g-leaflet-markercluster-version>
     </properties>
+
 
     <organization>
         <name>Vaadin Community</name>
@@ -244,6 +245,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
             </plugin>
 
 

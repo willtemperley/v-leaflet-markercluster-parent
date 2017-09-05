@@ -7,6 +7,7 @@ import org.vaadin.addon.leaflet.LeafletClickEvent;
 import org.vaadin.addon.leaflet.LeafletClickListener;
 import org.vaadin.addon.leaflet.markercluster.client.LeafletMarkerClusterState;
 import org.vaadin.addon.leaflet.markercluster.shared.AnimationEndServerRpc;
+import org.vaadin.addon.leaflet.markercluster.shared.MarkerClusterClickRpc;
 import org.vaadin.addon.leaflet.shared.ClickServerRpc;
 import org.vaadin.addon.leaflet.shared.Point;
 
@@ -27,6 +28,13 @@ public class LMarkerClusterGroup extends LFeatureGroup {
             public void onAnimationEnd() {
                 fireEvent(new LeafletAnimationEndEvent(LMarkerClusterGroup.this));
             }
+        });
+        registerRpc(new MarkerClusterClickRpc() {
+            @Override
+            public void onClusterClick(String json) {
+                fireEvent(new LMarkerClusterClickEvent(LMarkerClusterGroup.this, json));
+            }
+
         });
     }
 
@@ -82,5 +90,9 @@ public class LMarkerClusterGroup extends LFeatureGroup {
     public void addAnimationEndListener(LeafletAnimationEndListener listener) {
         addListener("onAnimationEnd", LeafletAnimationEndEvent.class, listener, LeafletAnimationEndListener.METHOD);
     }
-	
+
+    public void addMarkerClusterClickListener(MarkerClusterClickListener listener) {
+        addListener(LMarkerClusterClickEvent.class, listener, MarkerClusterClickListener.METHOD);
+    }
+
 }

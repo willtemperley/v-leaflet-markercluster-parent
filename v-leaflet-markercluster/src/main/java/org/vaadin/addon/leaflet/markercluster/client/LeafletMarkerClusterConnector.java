@@ -1,28 +1,26 @@
 package org.vaadin.addon.leaflet.markercluster.client;
 
 import com.google.gwt.core.client.JavaScriptObject;
-import com.vaadin.client.MouseEventDetailsBuilder;
+import com.google.gwt.core.client.JsArray;
 import com.vaadin.client.communication.RpcProxy;
-import org.peimari.gleaflet.client.ClickListener;
-import org.peimari.gleaflet.client.LayerGroup;
-import org.peimari.gleaflet.client.MouseEvent;
+import org.peimari.gleaflet.client.*;
 import org.vaadin.addon.leaflet.client.LeafletFeatureGroupConnector;
-import org.vaadin.addon.leaflet.client.U;
 import org.vaadin.addon.leaflet.markercluster.LMarkerClusterGroup;
 import org.vaadin.addon.leaflet.markercluster.shared.AnimationEndServerRpc;
-import org.vaadin.gleaflet.markercluster.client.AnimationEndListener;
-import org.vaadin.gleaflet.markercluster.client.MarkerClusterGroup;
+import org.vaadin.addon.leaflet.markercluster.shared.MarkerClusterClickRpc;
+import org.vaadin.gleaflet.markercluster.client.*;
 
 import com.vaadin.shared.ui.Connect;
-import org.vaadin.gleaflet.markercluster.client.MarkerClusterGroupOptions;
 
 @Connect(LMarkerClusterGroup.class)
 public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector {
 	
-	protected MarkerClusterGroup markerClusterGroup;
+	private MarkerClusterGroup markerClusterGroup;
 
-    AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
-    
+    private AnimationEndServerRpc animationEndServerRpc = RpcProxy.create(AnimationEndServerRpc.class, this);
+
+    private MarkerClusterClickRpc markerClusterClickRpc = RpcProxy.create(MarkerClusterClickRpc.class, this);
+
     private JavaScriptObject clusterClickListener;
 
     public LeafletMarkerClusterState getState() {
@@ -81,11 +79,26 @@ public class LeafletMarkerClusterConnector extends LeafletFeatureGroupConnector 
             markerClusterGroup.removeListener(clusterClickListener);
             clusterClickListener = null;
         }
-        clusterClickListener = markerClusterGroup.addClusterClickListener(new ClickListener() {
+
+        /*
+        Serialize MarkerCluster to GeoJSON
+         */
+        clusterClickListener = markerClusterGroup.addClusterClickListener(new ClusterClickListener() {
             @Override
-            public void onClick(MouseEvent event) {
-                rpc.onClick(U.toPoint(event.getLatLng()),
-                        MouseEventDetailsBuilder.buildMouseEventDetails(event.getNativeEvent(), getLeafletMapConnector().getWidget().getElement()));
+            public void onClick(MouseEvent event, MarkerCluster cluster) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("{\"type\":\"FeatureCollection\",\"features\":[");
+                JsArray<Marker> childMarkers = cluster.getAllChildMarkers();
+                for (int i = 0; i < childMarkers.length(); i++) {
+                    Marker marker = childMarkers.get(i);
+                    String s = marker.toGeoJSONString();
+                    stringBuilder.append(s);
+                    if (i < childMarkers.length() - 1) {
+                        stringBuilder.append(",");
+                    }
+                }
+                stringBuilder.append("]}");
+                markerClusterClickRpc.onClusterClick(stringBuilder.toString());
             }
         });
 
